@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block title %}
+    Movie List
+{% endblock %}
+
+{% block main %}
+    <div>
+        <form action="{% url 'core:moviecreate' %}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="Create Movie">
+        </form>
+    </div>
+    {% for movie in object_list %}
+        <div>
+            <a href={% url 'core:moviedetail' movie.id %}>
+                <img src="{{ movie.logo.url }}" alt="Place-holder"
+                width="300"
+                height="300">
+            </a>
+        </div>
+        <div>
+            <a href={% url 'core:moviedetail' movie.id %}>
+                <h1>{{ movie.title }} ({{ movie.release_date|date:"Y" }})</h1>
+            </a>   
+            
+        <p></p>
+        </div>
+    {% empty %}
+        <li>No movies yet.</li>
+    {% endfor %}
+
+{% endblock %}
