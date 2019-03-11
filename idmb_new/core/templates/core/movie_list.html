@@ -29,6 +29,18 @@
             
         <p></p>
         </div>
+        <div>
+            <form action="{% url 'core:movieupdate' movie.id%}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Edit Movie">
+            </form>
+        </div>
+        <div>
+            <form action="{% url 'core:moviedelete' movie.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete Movie">
+            </form>
+        </div>
     {% empty %}
         <li>No movies yet.</li>
     {% endfor %}
