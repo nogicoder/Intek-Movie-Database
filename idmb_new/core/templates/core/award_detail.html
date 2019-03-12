@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.name }}
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h6>Name: {{ object.name }}</h6>
+    </div>
+    {% if object.kind == 0 %}
+        <div>
+            <h6>Winners: {{ object.movie }}</h6>
+        </div>
+    {% else %}
+        <div>
+            <h6>Winners: {{ object.actor }}</h6>
+        </div>
+    {% endif %}
+    <div>
+        <form action="{% url 'core:awardupdate' object.id%}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="Edit Award">
+        </form>
+    </div>
+    <div>
+        <form action="{% url 'core:awarddelete' object.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete Award">
+        </form>
+    </div>
+{% endblock %}

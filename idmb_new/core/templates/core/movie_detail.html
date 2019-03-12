@@ -16,7 +16,13 @@
         height="300">
     </div>
     <div>
-        <h4>Release Date: {{ object.release_date }}</h4>
+        <h6>Release Date: {{ object.release_date }}</h6>
+    </div>
+    <h4>
+        Actors
+    </h4>
+    <div>
+        {{ object.actors.all|join:", " }}
     </div>
     <div>
         <h3>Description</h3>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block title %}
+    Award List
+{% endblock %}
+
+{% block main %}
+    <div>
+        <form action="{% url 'core:awardcreate' %}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="Create Award">
+        </form>
+    </div>
+    {% for award in object_list %}
+        <div>
+            <a href={% url 'core:awarddetail' award.id %}>
+                <h1>{{ award.name }}</h1>
+            </a>
+        <p></p>
+        </div>
+        <div>
+            <form action="{% url 'core:awardupdate' award.id%}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Edit Award">
+            </form>
+        </div>
+        <div>
+            <form action="{% url 'core:awarddelete' award.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete Award">
+            </form>
+        </div>
+    {% empty %}
+        <li>No awards yet.</li>
+    {% endfor %}
+
+{% endblock %}

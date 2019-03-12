@@ -15,6 +15,16 @@
             Place-holderrr
         {% endblock %}
     </title>
+
+    <style>
+    .conditional_form_part {
+        display: none;
+    }
+
+    .conditional_form_part_activator:checked + .conditional_form_part {
+        display: block;
+    }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,11 +36,11 @@
                     <a class="nav-link" href="{% url 'core:movielist' %}">Movies <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Actors</a>
+                    <a class="nav-link" href="{% url 'core:actorlist' %}">Actors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Awards</a>
-            </li>
+                    <a class="nav-link" href="{% url 'core:awardlist' %}">Awards</a>
+                </li>
             </ul>
         </div>
     </nav>
