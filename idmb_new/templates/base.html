@@ -43,6 +43,18 @@
                 </li>
             </ul>
         </div>
+
+        <div>
+            {% if user.is_authenticated %}
+                <form action="{% url 'user:logout' %}">
+                <button type="submit" class="btn btn-primary">Log Out</button>
+                </form>
+            {% else %}
+                <form action="{% url 'user:login' %}">
+                <button type="submit" class="btn btn-primary">Log In</button>
+                </form>
+            {% endif %}
+        </div>
     </nav>
     
     <div class="container" align="center">

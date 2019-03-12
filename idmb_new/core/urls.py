@@ -6,7 +6,6 @@ AwardUpdateView, AwardCreateView, AwardDeleteView)
 
 app_name = 'core'
 urlpatterns = [
-    path('', MovieListView.as_view(), name='movielist'),
     path('movies/', MovieListView.as_view(), name='movielist'),
     path('movies/create/', MovieCreateView.as_view(), name='moviecreate'),
     path('movies/<int:pk>/', MovieDetailView.as_view(), name='moviedetail'),

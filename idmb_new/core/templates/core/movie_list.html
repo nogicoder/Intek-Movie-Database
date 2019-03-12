@@ -8,12 +8,14 @@
 {% endblock %}
 
 {% block main %}
-    <div>
-        <form action="{% url 'core:moviecreate' %}" method="post">
-            {% csrf_token %}
-        <input type="submit" value="Create Movie">
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'core:moviecreate' %}" method="post">
+                {% csrf_token %}
+            <input type="submit" value="Create Movie">
+            </form>
+        </div>
+    {% endif %}
     {% for movie in object_list %}
         <div>
             <a href={% url 'core:moviedetail' movie.id %}>
@@ -29,6 +31,7 @@
             
         <p></p>
         </div>
+    {% if user.is_authenticated %}
         <div>
             <form action="{% url 'core:movieupdate' movie.id%}" method="post">
                 {% csrf_token %}
@@ -41,6 +44,7 @@
                 <input type="submit" value="Delete Movie">
             </form>
         </div>
+    {% endif %}
         
     {% empty %}
         <li>No movies yet.</li>

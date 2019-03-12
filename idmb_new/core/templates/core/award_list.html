@@ -8,12 +8,14 @@
 {% endblock %}
 
 {% block main %}
+    {% if user.is_authenticated %}
     <div>
         <form action="{% url 'core:awardcreate' %}" method="post">
             {% csrf_token %}
         <input type="submit" value="Create Award">
         </form>
     </div>
+    {% endif %}
     {% for award in object_list %}
         <div>
             <a href={% url 'core:awarddetail' award.id %}>
@@ -21,6 +23,7 @@
             </a>
         <p></p>
         </div>
+        {% if user.is_authenticated %}
         <div>
             <form action="{% url 'core:awardupdate' award.id%}" method="post">
                 {% csrf_token %}
@@ -33,6 +36,7 @@
                 <input type="submit" value="Delete Award">
             </form>
         </div>
+        {% endif %}
     {% empty %}
         <li>No awards yet.</li>
     {% endfor %}

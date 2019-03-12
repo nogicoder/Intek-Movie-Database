@@ -35,14 +35,15 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'user',
+    'core',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'core',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_REDIRECT_URL = "core:movielist"
+LOOUT_REDIRECT_URL = "user:login"
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

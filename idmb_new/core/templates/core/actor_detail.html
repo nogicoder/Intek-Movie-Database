@@ -32,6 +32,7 @@
     <div>
         <h6>Alive: {{ object.alive }}</h6>
     </div>
+    {% if user.is_authenticated %}
     <div>
         <form action="{% url 'core:actorupdate' object.id%}" method="post">
             {% csrf_token %}
@@ -44,4 +45,5 @@
         <input type="submit" value="Delete Actor">
         </form>
     </div>
+    {% endif %}
 {% endblock %}

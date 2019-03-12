@@ -7,7 +7,7 @@
 {% block main %}
     <div>
         <h1>{{ object.title }} ({{ object.release_date|date:"Y" }})</h1>
-        <button type="button" class="btn btn-dark">{{ object.get_category_display }}</button>
+        <button type="button" class="btn btn-dark">{{ object.category }}</button>
     </div>
     <div>
         <p></p>
@@ -30,6 +30,7 @@
     <div>
         {{ object.description }}
     </div>
+    {% if user.is_authenticated %}
     <div>
         <form action="{% url 'core:movieupdate' object.id%}" method="post">
             {% csrf_token %}
@@ -42,4 +43,5 @@
         <input type="submit" value="Delete Movie">
         </form>
     </div>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Logout page
+{% endblock %}
+
+{% block main %}
+<h1>You have logged out!</h1>
+<label>Login Again?</label>
+<form action="{% url 'user:login' %}">
+<button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}

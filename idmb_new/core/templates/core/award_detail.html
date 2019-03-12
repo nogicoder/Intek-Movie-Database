@@ -17,6 +17,7 @@
             <h6>Winners: {{ object.actor }}</h6>
         </div>
     {% endif %}
+    {% if user.is_authenticated %}
     <div>
         <form action="{% url 'core:awardupdate' object.id%}" method="post">
             {% csrf_token %}
@@ -29,4 +30,5 @@
         <input type="submit" value="Delete Award">
         </form>
     </div>
+    {% endif %}
 {% endblock %}
