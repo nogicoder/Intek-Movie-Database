@@ -2,26 +2,18 @@ from django.db.models import (Model, CharField, TextField,
 DateField, IntegerField, ImageField, BooleanField,
 ManyToManyField, ForeignKey, DateTimeField, CASCADE)
 
+
+class Category(Model):
+    category = CharField(max_length=140, blank=False)
+
+    def __str__(self):
+        return self.category
+
 class Movie(Model):
-
-    ACTION = 0
-    ADVENTURE = 1
-    ANIMATION = 2
-    BIOGRAPHY = 3
-    COMEDY = 4
-    THRILLER = 5
-
-    CATEGORIES = ((ACTION, 'action'),
-                  (ADVENTURE, 'adventure'),
-                  (ANIMATION, 'animation'),
-                  (BIOGRAPHY, 'biography'),
-                  (COMEDY, 'comedy'),
-                  (THRILLER, 'thriller'),)
-
     title = CharField(max_length=140, blank=False)
     description = TextField(blank=False)
     release_date = DateField(blank=False)
-    category = IntegerField(choices=CATEGORIES, blank=False)
+    category = ForeignKey(Category, on_delete=CASCADE, blank=True, null=True)
     logo = ImageField(blank=True, upload_to='posters', default='posters/noimg.jpg')
     actors = ManyToManyField(
         to='Actor',
@@ -33,7 +25,7 @@ class Movie(Model):
         ordering = ('-release_date', 'title')
 
     def __str__(self):
-        return "{} {}".format(self.title, self.release_date)
+        return self.title
 
 
 class Actor(Model):

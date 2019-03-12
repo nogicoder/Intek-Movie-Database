@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Movie, Actor, Award
+from .models import Category
 
-model_obj = [Movie, Actor, Award]
-admin.site.register(model_obj)
+
+admin.site.register(Category)
