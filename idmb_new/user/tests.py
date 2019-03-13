@@ -1,12 +1,12 @@
-from core.models import Movie, Category
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
-class HomePageTests(SimpleTestCase):
+class MoviePageTests(SimpleTestCase):
     """
     Test for status code and correct template mapping
-    of the Homepage using SimpleTestCase.
+    of the HomePage.
     """
 
     def test_home_page_status_code(self):
@@ -19,135 +19,30 @@ class HomePageTests(SimpleTestCase):
         self.assertTemplateUsed(response, 'registration/login.html')
 
 
-class MovieViewTests(TestCase):
-    "Test for correct Object creation."
-
+class RegistrationViewTests(TestCase):
+    """
+    Test for status code and correct template mapping
+    of the HomePage.
+    """
+    
     def setUp(self):
-        """
-        Setting up the Test, pre-populating the database
-        with 2 objects: A Category instance and a Movie instance.
-        """
-        Category.objects.create(category='Action')
-        Movie.objects.create(title='Test',
-                             description='Testing',
-                             release_date='2019-01-08',
-                             category=Category.objects.get(id=1))
+        user = User.objects.create(username='test')
+        user.set_password('12345')
+        user.save()
 
-    def test_movie_content(self):
+    def test_login_logout(self):
         """
-        Test the validity of the data passed into the database
-        with all fields, including both required and optional 
-        fields.
+        Test when field input is valid.
+        Both Login Logout return success status code.
         """
-        movie = Movie.objects.get(id=1)
-        expected_object_title = f'{movie.title}'
-        expected_object_description = f'{movie.description}'
-        expected_object_release_date = f'{movie.release_date}'
-        expected_object_category = f'{movie.category}'
-        expected_object_actors = f'{movie.actors}'
-        self.assertEquals(expected_object_title, 'Test')
-        self.assertEquals(expected_object_description, 'Testing')
-        self.assertEquals(expected_object_release_date, '2019-01-08')
-        self.assertEquals(expected_object_category, 'Action')
-        self.assertEquals(expected_object_actors, 'core.Actor.None')
-
-    def test_movie_detail_view(self):
+        logged_in = self.client.login(username='test', password='12345')
+        self.assertTrue(logged_in)
+        logged_out = self.client.logout()
+        self.assertIsNone(logged_out)
+    
+    def test_login_unhappy(self):
         """
-        Test the status code, object reference and right template
-        used to get user's data.
+        Test when field input is valid.
         """
-        response = self.client.get(reverse('core:moviedetail', args=[1]))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Test')
-        self.assertTemplateUsed(response, 'core/movie_detail.html')
-
-    def test_movie_update_view(self):
-        """
-        Test the status code, object reference and right template
-        used to update user's data.
-        """
-        update_url = reverse('core:movieupdate', args=[1])
-        r = self.client.get(update_url)
-        form = r.context['form']
-        data = form.initial
-        data['title'] = 'Changed'
-        response = self.client.post(update_url, data)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Movie.objects.get(pk=1).title, 'Changed')
-
-    def test_movie_delete_view(self):
-        """
-        Test the status code, object reference and right template
-        used to delete user's data.
-        """
-        response = self.client.post(reverse('core:moviedelete', args=[1]))
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(list(Movie.objects.all()), [])
-
-
-class ActorViewTests(TestCase):
-    "Test for correct Object creation."
-
-    def setUp(self):
-        """
-        Setting up the Test, pre-populating the database
-        with 3 objects: A Category instance, a Movie instance
-        and an Actor instance.
-        """
-        Category.objects.create(category='Action')
-        Movie.objects.create(title='Test',
-                             description='Testing',
-                             release_date='2019-01-08',
-                             category=Category.objects.get(id=1))
-        Actor.objects.create()
-
-    def test_movie_content(self):
-        """
-        Test the validity of the data passed into the database
-        with all fields, including both required and optional 
-        fields.
-        """
-        movie = Movie.objects.get(id=1)
-        expected_object_title = f'{movie.title}'
-        expected_object_description = f'{movie.description}'
-        expected_object_release_date = f'{movie.release_date}'
-        expected_object_category = f'{movie.category}'
-        expected_object_actors = f'{movie.actors}'
-        self.assertEquals(expected_object_title, 'Test')
-        self.assertEquals(expected_object_description, 'Testing')
-        self.assertEquals(expected_object_release_date, '2019-01-08')
-        self.assertEquals(expected_object_category, 'Action')
-        self.assertEquals(expected_object_actors, 'core.Actor.None')
-
-    def test_movie_detail_view(self):
-        """
-        Test the status code, object reference and right template
-        used to get user's data.
-        """
-        response = self.client.get(reverse('core:moviedetail', args=[1]))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Test')
-        self.assertTemplateUsed(response, 'core/movie_detail.html')
-
-    def test_movie_update_view(self):
-        """
-        Test the status code, object reference and right template
-        used to update user's data.
-        """
-        update_url = reverse('core:movieupdate', args=[1])
-        r = self.client.get(update_url)
-        form = r.context['form']
-        data = form.initial
-        data['title'] = 'Changed'
-        response = self.client.post(update_url, data)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Movie.objects.get(pk=1).title, 'Changed')
-
-    def test_movie_delete_view(self):
-        """
-        Test the status code, object reference and right template
-        used to delete user's data.
-        """
-        response = self.client.post(reverse('core:moviedelete', args=[1]))
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(list(Movie.objects.all()), [])
+        logged_in = self.client.login(username='test', password='')
+        self.assertFalse(logged_in)
