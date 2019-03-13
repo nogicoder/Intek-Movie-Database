@@ -1,14 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %} Add Actor {% endblock %} {% block main %}
 
+<form method="post"> {% csrf_token %}
 
-{% load static %}
+    <h4>First Name *</h4>
+    {{ form.first_name }}
+    <h4>Last Name *</h4>
+    {{ form.last_name }}
+    <h4>Birth Date *</h4>
+    {{ form.birth_date }}
+    <p><label for="id_sex">Sex:</label> <select name="sex" required="" id="id_sex">
+            <option value="" selected="">---------</option>
 
-{% block title %}
-    Create Actor
-{% endblock %}
+            <option value="0">male</option>
 
-{% block main %}
-    <form method="post" enctype='multipart/form-data'>{% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit" value="Create Actor">
-{% endblock %}
+            <option value="1">female</option>
+
+            <option value="2">unspecified</option>
+
+        </select></p>
+    <h4>Nationality *</h4>
+    {{ form.last_name }}
+    <h4>Status</h4>
+    <input type="checkbox" name="alive"> Alive
+
+    <p><label for="id_avatar">Avatar:</label> Currently: <a href="/media/avatars/noimg.jpg">avatars/noimg.jpg</a>
+        <input type="checkbox" name="avatar-clear" id="avatar-clear_id">
+        <label for="avatar-clear_id">Clear</label><br> Change:
+        <input type="file" name="avatar" accept="image/*" id="id_avatar">
+    </p>
+    <input type="submit" value="Add Actor"> {% endblock %}

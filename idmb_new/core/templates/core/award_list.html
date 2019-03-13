@@ -16,29 +16,56 @@
         </form>
     </div>
     {% endif %}
+    <h1>Movie Awards</h1>
     {% for award in object_list %}
-        <div>
-            <a href={% url 'core:awarddetail' award.id %}>
-                <h1>{{ award.name }}</h1>
-            </a>
-        <p></p>
-        </div>
-        {% if user.is_authenticated %}
-        <div>
-            <form action="{% url 'core:awardupdate' award.id%}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Edit Award">
-            </form>
-        </div>
-        <div>
-            <form action="{% url 'core:awarddelete' award.id %}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Delete Award">
-            </form>
-        </div>
+        {% if award.kind == 0 %}
+            <div>
+                <a href={% url 'core:awarddetail' award.id %}>
+                    <h1>{{ award.name }}</h1>
+                </a>
+            <p></p>
+            </div>
+            {% if user.is_authenticated %}
+            <div>
+                <form action="{% url 'core:awardupdate' award.id%}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Edit Award">
+                </form>
+            </div>
+            <div>
+                <form action="{% url 'core:awarddelete' award.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete Award">
+                </form>
+            </div>
+            {% endif %}
         {% endif %}
-    {% empty %}
-        <li>No awards yet.</li>
+    {% endfor %}
+
+    <h1>Actor Awards</h1>
+    {% for award in object_list %}
+        {% if award.kind == 1 %}
+            <div>
+                <a href={% url 'core:awarddetail' award.id %}>
+                    <h1>{{ award.name }}</h1>
+                </a>
+            <p></p>
+            </div>
+            {% if user.is_authenticated %}
+            <div>
+                <form action="{% url 'core:awardupdate' award.id%}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Edit Award">
+                </form>
+            </div>
+            <div>
+                <form action="{% url 'core:awarddelete' award.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete Award">
+                </form>
+            </div>
+            {% endif %}
+        {% endif %}
     {% endfor %}
 
 {% endblock %}

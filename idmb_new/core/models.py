@@ -1,6 +1,6 @@
-from django.db.models import (Model, CharField, TextField, 
-DateField, IntegerField, ImageField, BooleanField,
-ManyToManyField, ForeignKey, DateTimeField, CASCADE)
+from django.db.models import (Model, CharField, TextField,
+                              DateField, IntegerField, ImageField, BooleanField,
+                              ManyToManyField, ForeignKey, DateTimeField, CASCADE)
 
 
 class Category(Model):
@@ -9,12 +9,14 @@ class Category(Model):
     def __str__(self):
         return self.category
 
+
 class Movie(Model):
     title = CharField(max_length=140, blank=False)
     description = TextField(blank=False)
     release_date = DateField(blank=False)
     category = ForeignKey(Category, on_delete=CASCADE, blank=True, null=True)
-    logo = ImageField(blank=True, upload_to='posters', default='posters/noimg.jpg')
+    logo = ImageField(blank=True, upload_to='posters',
+                      default='posters/noimg.jpg')
     actors = ManyToManyField(
         to='Actor',
         related_name='acting_credits',
@@ -32,7 +34,7 @@ class Actor(Model):
     MALE = 0
     FEMALE = 1
     UNSPECIFIED = 2
-    
+
     GENDERS = (
         (MALE, 'male'),
         (FEMALE, 'female'),
@@ -45,8 +47,9 @@ class Actor(Model):
     sex = IntegerField(choices=GENDERS, blank=False)
     nationality = CharField(max_length=140, blank=False)
     alive = BooleanField(null=True)
-    avatar = ImageField(blank=True, upload_to='avatars', default='avatars/noimg.jpg')
-    
+    avatar = ImageField(blank=True, upload_to='avatars',
+                        default='avatars/noimg.jpg')
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
@@ -63,6 +66,6 @@ class Award(Model):
     movie = ForeignKey(Movie, on_delete=CASCADE, blank=True, null=True)
     actor = ForeignKey(Actor, on_delete=CASCADE, blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return "{} - {}".format(self.name, self.kind)

@@ -1,3 +1,33 @@
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-<input type="submit" value="Update">
+{% extends 'base.html' %}
+
+{% block title %}
+    Create Award
+{% endblock %}
+
+{% block main %}
+
+    <form method="post"> {% csrf_token %}
+
+        <h4>Award Name *</h4>
+        {{ form.name }}
+        <h4>Award Category *</h4>
+        {% for value, text in form.kind.field.choices %}
+                {% if value == 0 %}
+                    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind'> Movie
+                    <div class="conditional_form_part">
+                        Winner
+                        {{ form.movie }}
+                    </div>
+                {% endif %}
+                {% if value == 1 %}
+                    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind'> Actor
+                    <div class="conditional_form_part">
+                        Winner
+                        {{ form.actor }}
+                    </div>
+                {% endif %}
+        {% endfor %}
+    <input type="submit" value="Create Award">
+
+
+{% endblock %}

@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (MovieListView, MovieDetailView, MovieCreateView,
-MovieUpdateView, MovieDeleteView, ActorListView, ActorDetailView,
-ActorUpdateView, ActorCreateView, ActorDeleteView, AwardListView, AwardDetailView,
-AwardUpdateView, AwardCreateView, AwardDeleteView)
+                    MovieUpdateView, MovieDeleteView, ActorListView, ActorDetailView,
+                    ActorUpdateView, ActorCreateView, ActorDeleteView, AwardListView, AwardDetailView,
+                    AwardUpdateView, AwardCreateView, AwardDeleteView)
 
 app_name = 'core'
 urlpatterns = [
@@ -22,4 +22,3 @@ urlpatterns = [
     path('awards/<int:pk>/update/', AwardUpdateView.as_view(), name='awardupdate'),
     path('awards/<int:pk>/delete/', AwardDeleteView.as_view(), name='awarddelete'),
 ]
-

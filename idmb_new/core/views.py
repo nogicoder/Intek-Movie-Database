@@ -8,7 +8,7 @@ from .models import Movie, Actor, Award
 
 class MovieListView(ListView):
     model = Movie
-    template_name='core/movie_list.html'
+    template_name = 'core/movie_list.html'
 
 
 class MovieDetailView(DetailView):
@@ -37,12 +37,12 @@ class MovieDeleteView(DeleteView):
 
 class ActorListView(ListView):
     model = Actor
-    template_name='core/actor_list.html'
+    template_name = 'core/actor_list.html'
 
 
 class ActorDetailView(DetailView):
     model = Actor
-    template_name='core/actor_detail.html'
+    template_name = 'core/actor_detail.html'
 
 
 class ActorCreateView(CreateView):
@@ -66,12 +66,12 @@ class ActorDeleteView(DeleteView):
 
 class AwardListView(ListView):
     model = Award
-    template_name='core/award_list.html'
+    template_name = 'core/award_list.html'
 
 
 class AwardDetailView(DetailView):
     model = Award
-    template_name='core/award_detail.html'
+    template_name = 'core/award_detail.html'
 
 
 class AwardCreateView(CreateView):
@@ -79,7 +79,7 @@ class AwardCreateView(CreateView):
     fields = "__all__"
     template_name_suffix = '_create'
     success_url = reverse_lazy('core:awardlist')
-    
+
 
 class AwardUpdateView(UpdateView):
     model = Award
@@ -91,5 +91,3 @@ class AwardUpdateView(UpdateView):
 class AwardDeleteView(DeleteView):
     model = Award
     success_url = reverse_lazy('core:awardlist')
-
-
