@@ -1,0 +1,126 @@
+<!-- Inherited from the base.html -->
+{% extends 'core/base.html' %} {% block title %} {{ object.title }} {% endblock %} {% block main %}
+
+<!-- Displaying details of the movie object -->
+<div>
+    <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+</div>
+<div>
+    <p></p>
+    <img src="{{ object.avatar.url }}" alt="Place-holder" width="300" height="300">
+</div>
+<div>
+    <h6>First Name: {{ object.first_name }}</h6>
+</div>
+<div>
+    <h6>Last Name: {{ object.last_name }}</h6>
+</div>
+<div>
+    <h6>Birth Date: {{ object.birth_date }}</h6>
+</div>
+<div>
+    <h6>Sex: {{ object.get_sex_display }}</h6>
+</div>
+<div>
+    <h6>Nationality: {{ object.nationality }}</h6>
+</div>
+
+<!-- Displaying status depends on the alive value -->
+<div>
+    {% if object.alive == None %}
+    <h6>Alive: Unknown</h6>
+    {% endif %} {% if object.alive == True %}
+    <h6>Alive: Yes</h6>
+    {% endif %} {% if object.alive == False %}
+    <h6>Alive: No</h6>
+    {% endif %}
+</div>
+
+<!-- Showing Update and Delete button if authenticated user-->
+{% if user.is_authenticated %}
+<div>
+    <form action="{% url 'core:actorupdate' object.id%}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary btn-lg btn-space">Edit</button>
+    </form>
+</div>
+<div>
+    <form action="{% url 'core:actordelete' object.id%}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary btn-lg btn-space">Delete</button>
+    </form>
+</div>
+
+{% endif %}
+
+<!-- For the Comment component: Only if authenticated user -->
+<hr> {% if user.is_authenticated %}
+
+<!-- Trigger the pop-up modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Comment</button>
+
+<form method="post" action="{% url 'core:addaccomment' object.id%}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-space">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<!-- Displaying comments -->
+{% endif %} {% for comment in actor.comments.all %}
+<div class="comment">
+    <div class="date">Date: {{ comment.created_date }}</div>
+    <h3>Author: {{ comment.author }}</h3>
+    <p>Comment: {{ comment.text|linebreaks }}</p>
+</div>
+
+{% if user.is_authenticated and user.username == comment.author %}
+<form action="{% url 'core:delaccomment' comment.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete Comment">
+</form>
+<!-- Only the author allowed to delete and edit -->
+<button type="button" class="btn btn-secondary btn-lg btn-space" data-toggle="modal" data-target="#myModal1">Edit
+    Comment</button>
+
+<form method="post" action="{% url 'core:editaccomment' comment.id%}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-space">Edit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endif %} {% empty %}
+<p>No comments here yet</p>
+{% endfor %} {% endblock %}

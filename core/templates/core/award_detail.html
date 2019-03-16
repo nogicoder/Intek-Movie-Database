@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %} {% block title %} {{ object.name }} {% endblock %} {% block main %}
+
+
+<!-- Display form fields -->
+<div>
+    <h1>Name: {{ object.name }}</h1>
+</div>
+{% if object.kind == 0 %}
+<div>
+    <h6>Kind: Movie Award</h6>
+</div>
+<div>
+    <h6>Winners: {{ object.movie.all|join:", " }}</h6>
+</div>
+{% else %}
+<div>
+    <h6>Kind: Actor Award</h6>
+</div>
+<div>
+    <h6>Winners: {{ object.actor.all|join:", " }}</h6>
+</div>
+
+<!-- Adding Edit and Delete Function -->
+{% endif %} {% if user.is_authenticated %}
+<div>
+    <form action="{% url 'core:awardupdate' object.id%}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-secondary btn-lg btn-space" type="submit">Edit Award</button>
+    </form>
+</div>
+<div>
+    <form action="{% url 'core:awarddelete' object.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-secondary btn-lg btn-space" type="submit">Delete Award</button>
+    </form>
+</div>
+{% endif %}
+
+
+<hr> {% if user.is_authenticated %}
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Comment</button>
+
+<form method="post" action="{% url 'core:addawcomment' object.id %}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary btn-lg btn-space" type="submit">Add</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<!-- Showing Comments -->
+{% endif %} {% for comment in award.comments.all %}
+<div class="comment">
+    <div class="date">Date: {{ comment.created_date }}</div>
+     <h3>Author: {{ comment.author }} </h3>
+    <p>Comment: {{ comment.text|linebreaks }}</p>
+</div>
+
+
+<!-- Only the author allowed to delete and edit -->
+{% if user.is_authenticated and user.username == comment.author %}
+<form action="{% url 'core:delawcomment' comment.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete Comment">
+</form>
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-secondary btn-lg btn-space" data-toggle="modal" data-target="#myModal1">Edit
+    Comment</button>
+
+<form method="post" action="{% url 'core:editawcomment' comment.id%}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-space">Edit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endif %} {% empty %}
+<p>No comments here yet</p>
+{% endfor %} {% endblock %}

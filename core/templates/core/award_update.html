@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %} {% load static %} {% block title %} Award List {% endblock %} {% block main %}
+<!-- Display form fields -->
+<form method="post">{% csrf_token %}
+    <h4>Award Name *</h4>
+    <input type="text" name="name" value={{object.name}}>
+    <h4>Award Category *</h4>
+    {% for value, text in form.kind.field.choices %} {% if value == 0 %}
+    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind' checked> Movie
+    <div class="conditional_form_part">
+        Winner {{ form.movie }}
+    </div>
+    {% endif %}<br>
+    {% if value == 1 %}
+    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind'> Actor
+    <div class="conditional_form_part">
+        Winner {{ form.actor }}
+    </div>
+    {% endif %} {% endfor %}
+    Created At:
+    {{ form.created_at }}
+    <input type="submit" value="Update">
+</form>
+{% endblock %}

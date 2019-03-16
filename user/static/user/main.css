@@ -1,0 +1,133 @@
+/* Setting body background-color */
+
+.jumbotron {
+    background-color: transparent !important;
+}
+
+.btn-space {
+    margin-right: 20px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #00b3db;
+    border-color: #285e8e;
+    /*set the color you want here*/
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.active,
+.open>.dropdown-toggle.btn-secondary {
+    color: #fff;
+    background-color: #00b3db;
+    border-color: #285e8e;
+    /*set the color you want here*/
+}
+
+body {
+    background: #0f0f0f;
+}
+
+
+/* Header Section Configuration */
+
+header {
+    position: relative;
+    height: 900px;
+    min-height: 900px;
+    width: 100%;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    text-align: center;
+    overflow: hidden;
+}
+
+
+/* Header Video */
+
+header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -100;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+header img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -100;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+
+/* Block prior to banner */
+
+header:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 130%;
+}
+
+
+/* Banner In-between Video */
+
+header .banner {
+    display: inline-block;
+    vertical-align: center;
+    width: 70%;
+    text-align: center;
+    font: 40px 'opensans-bold', arial;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+/* Text in Banner */
+
+header .banner-text {
+    color: #ffffffc2;
+    width: 100%;
+}
+
+header .banner-button {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+/* Footer section with text */
+
+footer {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0.8em;
+    background-color: #0f0f0f;
+    text-align: center;
+    color: #fff;
+    text-align: center;
+}

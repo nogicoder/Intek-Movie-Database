@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %} {% load static %} {% block title %} Award List {% endblock %} {% block main %}
+
+<div class="split left">
+    <div class="centered">
+        <h1>Movie</h1> {% for award in object_list %} {% if award.kind == 0 %}
+        <div>
+            <a href={% url 'core:awarddetail' award.id %}>
+                <h2>{{ award.name }}</h2>
+            </a>
+        </div>
+        {% endif %} {% if user.is_authenticated and award.kind == 0 %}
+        <div>
+            <form action="{% url 'core:awardupdate' award.id%}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-secondary btn-lg" type="submit">Edit</button>
+            </form>
+        </div>
+        <div>
+            <form action="{% url 'core:awarddelete' award.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-secondary btn-lg" type="submit">Delete</button>
+            </form>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
+</div>
+
+<div class="split right">
+    <div class="centered">
+
+        <h1>Actor</h1>
+        {% for award in object_list %} {% if award.kind == 1 %}
+        <div>
+            <a href={% url 'core:awarddetail' award.id %}>
+                <h2>{{ award.name }}</h2>
+            </a>
+        </div>
+        {% endif %} {% if user.is_authenticated and award.kind == 1 %}
+        <div>
+            <form action="{% url 'core:awardupdate' award.id%}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-secondary btn-lg" type="submit">Edit</button>
+            </form>
+        </div>
+        <div>
+            <form action="{% url 'core:awarddelete' award.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-secondary btn-lg" type="submit">Delete</button>
+            </form>
+        </div>
+        {% endif %} {% endfor %}
+
+    </div>
+</div>
+
+<!-- Only allow authenticated user -->
+{% if user.is_authenticated %}
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Award</button>
+
+<form method="post" action="{% url 'core:awardcreate' %}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Award</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Award Name *</h4>
+                    {{ form.name }}
+                    <h4>Award Category *</h4>
+                    {% for value, text in form.kind.field.choices %} {% if value == 0 %}
+                    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind' checked> Movie
+                    <div class="conditional_form_part">
+                        Winner {{ form.movie }}
+                    </div>
+                    {% endif %}
+                    <p></p>
+                    {% if value == 1 %}
+                    <input class="conditional_form_part_activator" type="radio" value="{{value}}" name='kind'> Actor
+                    <div class="conditional_form_part">
+                        Winner {{ form.actor }}
+                    </div>
+                    {% endif %} {% endfor %}
+                    Created At:
+                    {{ form.created_at }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg">Add</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endif %} 
+{% endblock %}

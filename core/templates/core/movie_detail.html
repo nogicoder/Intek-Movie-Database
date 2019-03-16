@@ -1,0 +1,113 @@
+{% extends 'core/base.html' %} {% block title %} {{ object.title }} {% endblock %} {% block main %}
+
+<!-- Display object fields -->
+<div>
+    <h1>{{ object.title }} ({{ object.release_date|date:"Y" }})</h1>
+    <button type="button" class="btn btn-dark">{{ object.category }}</button>
+</div>
+<div>
+    <p></p>
+    <img src="{{ object.logo.url }}" alt="Place-holder" width="300" height="300">
+</div>
+<div>
+    <h4>Release Date: {{ object.release_date }}</h4>
+</div>
+<h2>
+    Actors
+</h2>
+<div>
+    <h4>{{ object.actors.all|join:", " }}</h4>
+
+</div>
+<div>
+    <h2>Description</h2>
+</div>
+<div>
+    <h4> {{ object.description }}</h4>
+</div>
+<!-- Only allow rightful users to edit and delete -->
+{% if user.is_authenticated %}
+<div>
+    <form action="{% url 'core:movieupdate' object.id%}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary btn-lg btn-space">Edit</button>
+    </form>
+</div>
+<div>
+    <form action="{% url 'core:moviedelete' object.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary btn-lg btn-space">Delete</button>
+    </form>
+</div>
+{% endif %}
+
+<hr> {% if user.is_authenticated %}
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-secondary btn-lg btn-space" data-toggle="modal" data-target="#myModal">Add Comment</button>
+
+<form method="post" action="{% url 'core:addmvcomment' object.id%}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-space">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<!-- Displaying Comments -->
+{% endif %} {% for comment in movie.comments.all %}
+<div class="comment">
+    <div class="date">Date: {{ comment.created_date }}</div>
+     <h3>Author: {{ comment.author }} </h3>
+    <p>Comment: {{ comment.text|linebreaks }}</p>
+</div>
+
+<!-- Only the author allowed to delete and edit -->
+{% if user.is_authenticated and user.username == comment.author %}
+<form action="{% url 'core:delmvcomment' comment.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete Comment">
+</form>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-secondary btn-lg btn-space" data-toggle="modal" data-target="#myModal1">Edit Comment</button>
+
+<form method="post" action="{% url 'core:editmvcomment' comment.id%}">{% csrf_token %}
+    <!-- Modal -->
+    <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Comment</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg btn-space" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-space">Edit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+{% endif %} {% empty %}
+<p>No comments here yet</p>
+{% endfor %} {% endblock %}

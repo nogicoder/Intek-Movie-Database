@@ -1,0 +1,11 @@
+@media only screen and (max-width: 767px) {
+    header {
+        max-height: auto;
+        background-color: gray;
+        background-image: None;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-size: cover;
+    }
+}

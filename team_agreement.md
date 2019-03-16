@@ -14,7 +14,7 @@
       + tvtai:
               - strengths: Research skill on problems
               - weaknesses: Lack of coding skill
-5. The allocation of the workload: *The status: research => implement => test => done*
+5. The allocation of the workload: *The status: research => implement => test => done* 
         + Date: Sun Mar 03/2019 - 1st => *MEMBERS*: MBACH, TVTAI JOINED THE MEETING
         _CONTENT_ : Brief on components of the project
         _DISCUSSION_ :
@@ -24,7 +24,7 @@
                         . Views function
                         . UX-UI
                 + TOTAL WORK ALLOCATION FOR THE PROJECT:
-                (-) tvtai:
+                (-) tvtai: 
                         + Authentication
                         + Functions: View all, view details (R)
                         + UX-UI (30%)
@@ -32,20 +32,27 @@
                         + Functions: Edit, Add, Delete (CUD)
                         + UX-UI (70%)
                 + DETAIL WORK ALLOCATION FOR THIS PHASE:
-                (-) tvtai:
+                (-) tvtai: 
                         + Authentication
                 (-) mbach:
                         + Functions: Edit, Add, Delete (CUD)
-        _DEADLINE__: Thu Mar 07/2019
-        + Date: Tue Mar 05/2019 - 2nd => *MEMBERS*: MBACH JOINED THE MEETING
-        _CONTENT_ : Brief on components of the project
+        _DEADLINE: Thu Mar 07/2019
+
+        + Date: Sun Mar 07/2019 - 1st => *MEMBERS*: MBACH
+        _CONTENT_ : Re-organize workload
         _DISCUSSION_ :
-                + Tai quit the project
-                + I will work on these 2 functions first, and might skip the pretty UI.
-                        + Authentication
-                        + Functions: View all, view details (R)
-                        + Functions: Edit, Add, Delete (CUD)
-        _DEADLINE__: Thu Mar 09/2019
+                + Tai left the project so I will take care of the
+                project by myself
+                + DETAIL WORK ALLOCATION FOR THIS PHASE:
+                + Functions + Authentication
+        _DEADLINE: 12/03/2019
+        
+        + Date: Sun Mar 13/2019 - 1st => *MEMBERS*: MBACH
+        _CONTENT_ : UI and Comments
+        _DISCUSSION_ :
+                + Finished the core
+                + Adding UI and Comment Section
+        _DEADLINE: 14/03/2019
 
 6. The features you want to implement and how they interface together:
         . Details: https://imgur.com/a/tBgajSH

@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %} {% load static %} {% block title %} Update Movie {% endblock %} {% block main %}
+<!-- Display form fields -->
+<form method="post" enctype='multipart/form-data'>{% csrf_token %}
+    <h2>Movie Title*</h2>
+    <input type="text" name="title" value={{object.title}}>
+    <h2>Description*</h2>
+    <input type="text" name="description" value={{object.description}}>
+    <h2>Release Date*</h2>
+    {{form.release_date}}
+    <h2>Category*</h2>
+    {{form.category}}
+    <h2>Poster</h2>
+    {{form.logo}}
+    <h2>Starring</h2>
+    {{form.actors}}
+
+    <button class="btn btn-secondary btn-lg btn-space" type="submit">Update</button>
+</form>{% endblock %}

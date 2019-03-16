@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %} {% load static %} {% block title %} Update Actor {% endblock %} {% block main %}
+<!-- Display form fields -->
+<form method="post" enctype='multipart/form-data'>{% csrf_token %}
+    <h2>First Name*</h2>
+    <input type="text" name="first_name" value={{object.first_name}}>
+    <h2>Last Name*</h2>
+    <input type="text" name="last_name" value={{object.last_name}}>
+    <h2>Birthday*</h2>
+    {{form.birth_date}}
+    <h2>Gender*</h2>
+    {{form.sex}}
+    <h2>Nationality*</h2>
+    {{form.nationality}}
+    <h2>Alive</h2>
+    {{form.alive}}
+    <h2>Avatar</h2>
+    {{form.avatar}}
+
+    <button class="btn btn-secondary btn-lg btn-space" type="submit">Update</button>
+</form>{% endblock %}

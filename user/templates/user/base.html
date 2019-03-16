@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% block title %}
+    <title>INTEK MOVIE DATABASE</title>
+    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=stylesheet type="text/css" href="/static/user/main.css">
+    <link rel=stylesheet type="text/css" href="/static/user/media_queries.css">
+</head>
+
+<body>
+    {% block main %}
+    <header>
+        <video loop muted autoplay playsinline>
+        <source src="/static/user/space.mp4" type="video/mp4"/>
+    </video>
+        <div class="banner">
+            <div class="banner-text">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-2 text-light">INTEK MOVIE DATABASE</h1>
+                        <p class="lead">The Sleekiest Movie Database Ever Created!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-text">
+                <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                    <a href="{% url 'core:movielist' %}">
+                        <button type="button" class="btn btn-secondary btn-lg btn-space">SEE MOVIES</button>
+                    </a>{% if not user.is_authenticated %}
+                    <a href="{% url 'user:login' %}">
+                        <button type="button" class="btn btn-secondary btn-lg btn-space">LOGIN</button>
+                    </a>
+                    <a href="{% url 'user:register' %}">
+                        <button type="button" class="btn btn-secondary btn-lg btn-space">REGISTER</button>
+                    </a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% endblock %}
+
+    <footer>
+        <div>
+            &copy; Copyright Chris@INTEK
+        </div>
+    </footer>
+
+</html>
